@@ -27,6 +27,7 @@ import VASSAL.tools.image.ImageIOException;
 import VASSAL.tools.image.ImageNotFoundException;
 import VASSAL.tools.image.UnrecognizedImageTypeException;
 import VASSAL.tools.opcache.OpFailedException;
+import VASSAL.tools.ResourcePathFinder;
 
 public class Op {
   protected Op() {}
@@ -44,6 +45,20 @@ public class Op {
     }
   }
 
+  public static SourceOp load(String name, ResourcePathFinder rpf) {
+    if (!name.startsWith("/")) {
+      name = rpf.findImagePath(name);
+    }
+
+    if (name.endsWith(".svg")) { //NON-NLS
+      return new SourceOpSVGImpl(name);
+    }
+    else {
+      return new SourceOpBitmapImpl(name);
+    }
+  }
+
+  
   public static SourceOp load(BufferedImage image) {
     return new ImageSourceOpBitmapImpl(image);
   }
@@ -61,6 +76,20 @@ public class Op {
     }
   }
 
+  public static SourceOp loadLarge(String name, ResourcePathFinder rpf) {
+    if (!name.startsWith("/")) {
+      name = rpf.findImagePath(name);
+    }
+
+    if (name.endsWith(".svg")) { //NON-NLS
+      return new SourceOpSVGImpl(name);
+    }
+    else {
+      return new SourceOpTiledBitmapImpl(name);
+    }
+  }
+
+  
   public static ScaleOp scale(ImageOp sop, double scale) {
     if (sop instanceof RotateScaleOpSVGImpl) {
       final RotateScaleOpSVGImpl rsop = (RotateScaleOpSVGImpl) sop;
