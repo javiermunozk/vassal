@@ -17,6 +17,7 @@
  */
 package VASSAL.counters;
 
+import VASSAL.build.GameModule;
 import VASSAL.build.module.documentation.HelpFile;
 import VASSAL.command.Command;
 import VASSAL.configure.ImageSelector;
@@ -233,7 +234,7 @@ public class NonRectangular extends Decorator implements EditablePiece {
           repack(controls);
         }
         else {
-          final Image img = Op.load(picker.getImageName()).getImage();
+          final Image img = Op.load(picker.getImageName(), GameModule.getGameModule().getResourcePathFinder()).getImage();
           if (img != null)
             setShapeFromImage(img);
         }

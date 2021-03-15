@@ -245,10 +245,10 @@ public class Board extends AbstractConfigurable implements GridContainer {
         }
 
         if (tiled) {
-          boardImageOp = Op.loadLarge(imageFile);
+          boardImageOp = Op.loadLarge(imageFile, GameModule.getGameModule().getResourcePathFinder());
         }
         else {
-          boardImageOp = Op.load(imageFile);
+          boardImageOp = Op.load(imageFile, GameModule.getGameModule().getResourcePathFinder());
         }
       }
     }

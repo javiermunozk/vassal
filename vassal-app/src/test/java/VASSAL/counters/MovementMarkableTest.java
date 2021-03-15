@@ -27,7 +27,9 @@ import VASSAL.configure.NamedHotKeyConfigurer;
 import VASSAL.tools.DataArchive;
 import VASSAL.tools.NamedKeyStroke;
 import VASSAL.tools.imageop.ImageOp;
+import VASSAL.tools.imageop.SourceOp;
 import VASSAL.tools.imageop.Op;
+import VASSAL.tools.ResourcePathFinder;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.Test;
@@ -36,6 +38,12 @@ import org.mockito.Mockito;
 
 public class MovementMarkableTest extends DecoratorTest {
 
+  public class MockResourcePathFinder implements ResourcePathFinder {
+    public String findImagePath(String name) {
+      return "images/" + name;
+    }
+  }
+  
   @Test
   public void serializeTests() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
@@ -54,13 +62,16 @@ public class MovementMarkableTest extends DecoratorTest {
   private MovementMarkable createTrait(String type) {
 
     // Create a dummy ImageOp before mocking Op
-    ImageOp im = Op.load(new BufferedImage(2, 2, BufferedImage.TYPE_4BYTE_ABGR));
-
+    SourceOp im = Op.load(new BufferedImage(2, 2, BufferedImage.TYPE_4BYTE_ABGR));
+    MockResourcePathFinder pathFinder = new MockResourcePathFinder();
     try (MockedStatic<GameModule> staticGm = Mockito.mockStatic(GameModule.class)) {
       try (MockedStatic<Op> staticOp = Mockito.mockStatic(Op.class)) {
 
         // Now return the dummy image when asked instead of looking in the archive
-        staticOp.when(() -> Op.load(any(String.class))).thenReturn(im);
+        //staticOp.when(() -> Op.load(any(String.class))).thenReturn(im);
+        ResourcePathFinder rpf = any();
+        //staticOp.when(() -> Op.load(any(String.class))).thenReturn(im);
+        staticOp.when(() -> Op.load(anyString(), rpf)).thenReturn(im);
 
         // Mock DataArchive to return a list of image names
         final DataArchive da = mock(DataArchive.class);
@@ -69,7 +80,8 @@ public class MovementMarkableTest extends DecoratorTest {
         // Mock GameModule to return a DataArchive
         final GameModule gm = mock(GameModule.class);
         when(gm.createPiece(anyString())).thenReturn(new BasicPiece());
-
+        when(gm.getResourcePathFinder()).thenReturn(rpf);
+        
         staticGm.when(GameModule::getGameModule).thenReturn(gm);
         return type == null ? new MovementMarkable() : new MovementMarkable(type, null);
       }

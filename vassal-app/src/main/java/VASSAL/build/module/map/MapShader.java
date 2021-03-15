@@ -303,7 +303,7 @@ public class MapShader extends AbstractToolbarItem implements GameComponent, Dra
 
   protected void buildShadePattern() {
     srcOp = pattern.equals(TYPE_IMAGE) && imageName != null
-          ? Op.load(imageName) : new PatternOp(color, pattern);
+        ? Op.load(imageName, GameModule.getGameModule().getResourcePathFinder()) : new PatternOp(color, pattern);
     patternRect = new Rectangle(srcOp.getSize());
   }
 

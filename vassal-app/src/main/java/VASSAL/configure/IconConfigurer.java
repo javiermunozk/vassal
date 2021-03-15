@@ -73,7 +73,7 @@ public class IconConfigurer extends Configurer {
     imageName = s == null ? "" : s;
 
     if (imageName.length() > 0) {
-      final ImageOp sop = Op.load(imageName);
+      final ImageOp sop = Op.load(imageName, GameModule.getGameModule().getResourcePathFinder());
       if (sop.getImage() != null) {
         icon = new ImageIcon(new OwningOpMultiResolutionImage(sop));
       }

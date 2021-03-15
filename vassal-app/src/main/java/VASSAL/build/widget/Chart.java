@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 import VASSAL.build.Buildable;
+import VASSAL.build.GameModule;
 import VASSAL.build.Widget;
 import VASSAL.build.module.documentation.HelpFile;
 import VASSAL.i18n.Resources;
@@ -54,7 +55,7 @@ public class Chart extends Widget {
   public Component getComponent() {
     if (chart == null) {
       label = new JLabel();
-      srcOp = (fileName == null || fileName.isBlank()) ? null : Op.load(fileName);
+      srcOp = (fileName == null || fileName.isBlank()) ? null : Op.load(fileName, GameModule.getGameModule().getResourcePathFinder());
       if (srcOp != null) {
         label.setIcon(new OpIcon(srcOp));
       }
@@ -100,7 +101,7 @@ public class Chart extends Widget {
       }
       fileName = (String) val;
       if (label != null) {
-        srcOp = (fileName == null || fileName.isBlank()) ? null : Op.load(fileName);
+        srcOp = (fileName == null || fileName.isBlank()) ? null : Op.load(fileName, GameModule.getGameModule().getResourcePathFinder());
         if (srcOp != null) {
           label.setIcon(new OpIcon(srcOp));
           label.revalidate();

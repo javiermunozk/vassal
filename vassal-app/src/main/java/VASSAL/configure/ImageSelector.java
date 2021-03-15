@@ -118,14 +118,14 @@ public class ImageSelector extends Configurer implements ItemListener {
         imageName = s;
       }
 
-      icon.setOp(Op.load(s));
+      icon.setOp(Op.load(s, GameModule.getGameModule().getResourcePathFinder()));
 
       // Is the image too large?
       if (maxWidth > 0 && (icon.getIconWidth() > maxWidth || icon.getIconHeight() > maxHeight)) {
         final double xRatio = (double) maxWidth / icon.getIconWidth();
         final double yRatio = (double) maxHeight / icon.getIconHeight();
         final double newScale = Math.min(xRatio, yRatio);
-        icon.setOp(Op.scale(Op.load(s), newScale));
+        icon.setOp(Op.scale(Op.load(s, GameModule.getGameModule().getResourcePathFinder()), newScale));
         imageScale.setText("(" + (int) (newScale * 100) + "%)");
         imageScale.setVisible(true);
       }

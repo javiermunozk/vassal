@@ -40,6 +40,7 @@ import javax.swing.JSlider;
 import VASSAL.build.AbstractConfigurable;
 import VASSAL.build.AutoConfigurable;
 import VASSAL.build.Buildable;
+import VASSAL.build.GameModule;
 import VASSAL.build.module.documentation.HelpFile;
 import VASSAL.configure.ColorConfigurer;
 import VASSAL.configure.Configurer;
@@ -336,7 +337,7 @@ public class ZoneHighlight extends AbstractConfigurable  {
     }
     else if (IMAGE.equals(key)) {
       imageName = (String) val;
-      srcOp = imageName.isBlank() ? null : Op.load(imageName);
+      srcOp = imageName.isBlank() ? null : Op.load(imageName, GameModule.getGameModule().getResourcePathFinder());
     }
   }
 

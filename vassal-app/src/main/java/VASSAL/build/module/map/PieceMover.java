@@ -419,7 +419,7 @@ public class PieceMover extends AbstractBuildable
    */
   private Image loadIcon(String name) {
     if (name == null || name.length() == 0) return null;
-    return Op.load(name).getImage();
+    return Op.load(name, GameModule.getGameModule().getResourcePathFinder()).getImage();
   }
 
   /**

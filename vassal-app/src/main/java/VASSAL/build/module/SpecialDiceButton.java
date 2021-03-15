@@ -629,7 +629,7 @@ public class SpecialDiceButton extends AbstractToolbarItem implements CommandEnc
         final String imageName = dice.get(i).getImageName(results[i]);
 
         if (imageName.length() > 0) {
-          final ImageOp sop = Op.load(imageName);
+          final ImageOp sop = Op.load(imageName, GameModule.getGameModule().getResourcePathFinder());
           if (sop.getImage() != null) {
             icons[i] = new ImageIcon(new OwningOpMultiResolutionImage(sop));
           }

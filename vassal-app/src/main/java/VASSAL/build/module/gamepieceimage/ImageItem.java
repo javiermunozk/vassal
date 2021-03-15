@@ -19,6 +19,7 @@
 package VASSAL.build.module.gamepieceimage;
 
 import VASSAL.build.AutoConfigurable;
+import VASSAL.build.GameModule;
 import VASSAL.configure.StringEnum;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -229,7 +230,7 @@ public class ImageItem extends Item {
         srcOp = BaseOp.op;
       }
       else {
-        srcOp = Op.load(iName);
+        srcOp = Op.load(iName, GameModule.getGameModule().getResourcePathFinder());
       }
       imageBounds = ImageUtils.getBounds(srcOp.getSize());
     }

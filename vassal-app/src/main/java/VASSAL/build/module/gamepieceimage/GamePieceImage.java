@@ -338,7 +338,7 @@ public class GamePieceImage extends AbstractConfigurable implements Visualizable
         if (getConfigureName() != null && getConfigureName().length() > 0) {
           w.addImage(getConfigureName(),
                      getEncodedImage((BufferedImage) visImage));
-          final SourceOp op = Op.load(getConfigureName());
+          final SourceOp op = Op.load(getConfigureName(), GameModule.getGameModule().getResourcePathFinder());
           op.update();
         }
       }

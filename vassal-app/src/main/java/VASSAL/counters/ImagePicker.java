@@ -107,7 +107,7 @@ public class ImagePicker extends JPanel
         imageName = name;
       }
 
-      icon.setOp(Op.load(imageName));
+      icon.setOp(Op.load(imageName, GameModule.getGameModule().getResourcePathFinder()));
       final Dimension d = new Dimension(icon.getIconWidth(), icon.getIconHeight());
 
       if (d.width > 200) d.width = 200;

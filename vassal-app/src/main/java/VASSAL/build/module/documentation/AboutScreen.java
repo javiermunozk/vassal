@@ -185,7 +185,7 @@ public class AboutScreen extends AbstractConfigurable {
       if (fileName != null) {
         fileName = fileName.trim();
         if (fileName.length() > 0) {
-          op = Op.load(fileName);
+          op = Op.load(fileName, GameModule.getGameModule().getResourcePathFinder());
 
           final Image img = op.getImage();
           if (img != null) {
